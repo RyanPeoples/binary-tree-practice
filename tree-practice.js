@@ -5,19 +5,59 @@ const { BinarySearchTree, TreeNode } = require('./binary-search-tree.js');
 // Practice problems on binary trees
 
 function findMinBST (rootNode) {
-  // Your code here
+  while(rootNode.left){
+    rootNode = rootNode.left
+  }
+  return rootNode.val
 }
 
 function findMaxBST (rootNode) {
-  // Your code here
+  while (rootNode.right) {
+    rootNode = rootNode.right
+  }
+  return rootNode.val
 }
 
-function findMinBT (rootNode) {
-  // Your code here
+function findMinBT(rootNode, min = rootNode.val) {
+  if (!rootNode) return min;
+  if (rootNode.val < min) min = rootNode.val;
+  if(rootNode.left){
+    if (min > rootNode.left.val) return findMinBT(rootNode.left, min);
+  }
+  if(rootNode.right){
+    if (min > rootNode.right.val) return findMinBT(rootNode.right, min);
+  }
+
+
+  return min;
+
 }
 
-function findMaxBT (rootNode) {
-  // Your code here
+function findMaxBT(rootNode, max = rootNode.val) {
+  if (!rootNode) return max;
+  if (rootNode.val > max) max = rootNode.val;
+  //check for null ends
+  if(!rootNode.left){
+    return findMaxBT(rootNode.right, max);
+  } else if(!rootNode.right){
+    return findMaxBT(rootNode.left, max);
+  }
+  //if both are valid
+  if (rootNode.left || rootNode.right) {
+    if(rootNode.right.val<rootNode.left.val){
+      return findMaxBT(rootNode.left, max);
+    } else{
+      return findMaxBT(rootNode.right, max);
+    }
+  }
+
+  // if (max < rootNode.left.val) return findMaxBT(rootNode.left, max);
+  // if (rootNode.right) {
+  //   if (max < rootNode.right.val) return findMaxBT(rootNode.right, max);
+  // }
+
+
+  return max;
 }
 
 function getHeight (rootNode) {
